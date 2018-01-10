@@ -1,0 +1,39 @@
+Source: debos
+Section: devel
+Priority: optional
+Maintainer: Debian Go Packaging Team <pkg-go-maintainers@lists.alioth.debian.org>
+Uploaders: Héctor Orón Martínez <zumbi@debian.org>
+Build-Depends: debhelper (>= 10),
+               dh-golang,
+               golang-any,
+               golang-github-docker-go-units-dev,
+               golang-github-stretchr-testify-dev,
+               golang-yaml.v2-dev,
+               golang-github-sjoerdsimons-ostree-go-dev,
+               golang-go-flags-dev,
+               golang-github-go-debos-fakemachine-dev,
+               golang-github-surma-gocpio-dev,
+               libostree-dev
+Standards-Version: 4.1.3
+Homepage: https://github.com/go-debos/debos
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-go/packages/debos.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-go/packages/debos.git
+XS-Go-Import-Path: github.com/go-debos/debos
+Testsuite: autopkgtest-pkg-go
+
+Package: debos
+Architecture: any
+Built-Using: ${misc:Built-Using}
+Recommends: bmap-tools, ovmf
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         systemd-container
+## d4s
+## and please add to runtime dependencies for debos: gzip, bzip2, xz, tar, zip, dpkg, apt, blkid, parted, losetup, udevadm, systemd-nspawn, debootstrap
+## may be I missed something
+Description: Debian OS builder
+ debos Debian OS builder. debos is a tool to make creation of various
+ debian based os "images" simpler. While most other tools focus on
+ specific use-case, debos is more meant as a toolchain to make comon
+ actions trivial while providing enough rope to do whatever tweaking that
+ might be required behind the scene.
