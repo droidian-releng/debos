@@ -1,5 +1,5 @@
-debos (1.0.0+git20171222.87b0d5e-1) unstable; urgency=medium
+debos (1.0.0+git20180112.6e577d4-1) unstable; urgency=medium
 
   * Initial release (Closes: #886772)
 
- -- Héctor Orón Martínez <zumbi@debian.org>  Wed, 10 Jan 2018 16:18:44 +0100
+ -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 20 Feb 2018 16:48:59 +0100
