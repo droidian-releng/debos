@@ -24,7 +24,9 @@ Testsuite: autopkgtest-pkg-go
 Package: debos
 Architecture: any
 Built-Using: ${misc:Built-Using}
-Recommends: bmap-tools, ovmf
+Recommends: bmap-tools
+          , busybox | busybox-static
+          , ovmf
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          systemd-container
