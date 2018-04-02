@@ -3,6 +3,9 @@ debos (1.0.0+git20180112.6e577d4-2) UNRELEASED; urgency=medium
   [ Geert Stappers ]
   * debian/control: recommend busybox (Closes: #891714)
 
+  [ Alexandre Viau ]
+  * Point Vcs-* urls to salsa.debian.org.
+
  -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Mar 2018 16:40:44 +0100
 
 debos (1.0.0+git20180112.6e577d4-1) unstable; urgency=medium
