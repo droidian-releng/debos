@@ -6,6 +6,15 @@ debos (1.0.0+git20180112.6e577d4-2) UNRELEASED; urgency=medium
   [ Alexandre Viau ]
   * Point Vcs-* urls to salsa.debian.org.
 
+  [ Ana Guerrero Lopez ]
+  * Update Depends:
+    - add qemu-system and qemu-user-static
+    - add debootstrap
+  * Update Recommends:
+    - Add gzip, bzip2, xz, tar, zip that are often used by debos
+    - Add binaries needed by the actions in image-partition:
+      util-linux, parted, mount, udev
+
  -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Mar 2018 16:40:44 +0100
 
 debos (1.0.0+git20180112.6e577d4-1) unstable; urgency=medium

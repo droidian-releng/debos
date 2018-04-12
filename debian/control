@@ -27,12 +27,21 @@ Built-Using: ${misc:Built-Using}
 Recommends: bmap-tools
           , busybox | busybox-static
           , ovmf
+          , gzip
+          , bzip2
+          , xz
+          , tar
+          , zip
+# For the action image-partition
+          , util-linux
+          , parted
+          , mount
+          , udev
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         systemd-container
-## d4s
-## and please add to runtime dependencies for debos: gzip, bzip2, xz, tar, zip, dpkg, apt, blkid, parted, losetup, udevadm, systemd-nspawn, debootstrap
-## may be I missed something
+         systemd-container,
+         debootstrap,
+         qemu-system, qemu-user-static
 Description: Debian OS builder
  debos Debian OS builder. debos is a tool to make creation of various
  debian based os "images" simpler. While most other tools focus on
