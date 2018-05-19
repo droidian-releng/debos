@@ -25,23 +25,23 @@ Package: debos
 Architecture: amd64
 Built-Using: ${misc:Built-Using}
 Recommends: bmap-tools
-          , busybox | busybox-static
           , ovmf
-          , gzip
           , bzip2
           , xz
-          , tar
           , zip
 # For the action image-partition
-          , util-linux
           , parted
           , mount
           , udev
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         systemd-container,
-         debootstrap,
-         qemu-system, qemu-user-static
+          , e2fsprogs
+          , linux-image-amd64
+Depends: ${shlibs:Depends}
+         , ${misc:Depends}
+         , busybox | busybox-static
+         , systemd-container
+         , debootstrap
+         , qemu-system-x86
+         , qemu-user-static
 Description: Debian OS builder
  debos is a tool to make creation of various Debian based OS "images"
  simpler. While most other tools focus on specific use-case, debos is
