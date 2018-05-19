@@ -22,7 +22,7 @@ XS-Go-Import-Path: github.com/go-debos/debos
 Testsuite: autopkgtest-pkg-go
 
 Package: debos
-Architecture: any
+Architecture: amd64
 Built-Using: ${misc:Built-Using}
 Recommends: bmap-tools
           , busybox | busybox-static
