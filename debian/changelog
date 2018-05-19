@@ -1,4 +1,4 @@
-debos (1.0.0+git20180112.6e577d4-2) UNRELEASED; urgency=medium
+debos (1.0.0+git20180328.8f2bc2a-1) unstable; urgency=medium
 
   [ Geert Stappers ]
   * debian/control: recommend busybox (Closes: #891714)
@@ -16,7 +16,13 @@ debos (1.0.0+git20180112.6e577d4-2) UNRELEASED; urgency=medium
       util-linux, parted, mount, udev
   * Small description update
 
- -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Mar 2018 16:40:44 +0100
+  [ Héctor Orón Martínez ]
+  * New upstream version 1.0.0+git20180328.8f2bc2a
+  * debian/control: restrict to arch amd64
+  * debian/control: bump standars version
+  * debian/control: rework depends and recommends
+
+ -- Héctor Orón Martínez <zumbi@debian.org>  Sat, 19 May 2018 16:33:01 +0200
 
 debos (1.0.0+git20180112.6e577d4-1) unstable; urgency=medium
 
