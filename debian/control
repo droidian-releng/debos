@@ -27,7 +27,7 @@ Built-Using: ${misc:Built-Using}
 Recommends: bmap-tools
           , ovmf
           , bzip2
-          , xz
+          , xz-utils
           , zip
 # For the action image-partition
           , parted
