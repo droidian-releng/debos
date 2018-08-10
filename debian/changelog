@@ -1,3 +1,10 @@
+debos (1.0.0+git20180808.5b74d5d-1) unstable; urgency=medium
+
+  * New upstream version 1.0.0+git20180808.5b74d5d
+  * debian/control: bump standards version
+
+ -- Héctor Orón Martínez <zumbi@debian.org>  Fri, 10 Aug 2018 18:14:06 +0200
+
 debos (1.0.0+git20180328.8f2bc2a-1) unstable; urgency=medium
 
   [ Geert Stappers ]
