@@ -21,8 +21,10 @@ host's or chrooted environment -- depending on 'chroot' property.
 Optional properties:
 
 - chroot -- run script or command in target filesystem if set to true.
-In other case the command or script is executed within the build process, with
-access to the filesystem and the image. In both cases it is run with root privileges.
+Otherwise the command or script is executed within the build process, with
+access to the filesystem ($ROOTDIR), the image if any ($IMAGE), the
+recipe directory ($RECIPEDIR) and the artifact directory ($ARTIFACTDIR).
+In both cases it is run with root privileges.
 
 - postprocess -- if set script or command is executed after all other commands and
 has access to the image file.
@@ -126,9 +128,9 @@ func (run *RunAction) Run(context *debos.DebosContext) error {
 	return run.doRun(*context)
 }
 
-func (run *RunAction) PostMachine(context debos.DebosContext) error {
+func (run *RunAction) PostMachine(context *debos.DebosContext) error {
 	if !run.PostProcess {
 		return nil
 	}
-	return run.doRun(context)
+	return run.doRun(*context)
 }
