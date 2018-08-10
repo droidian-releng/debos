@@ -14,25 +14,29 @@ import (
 	"github.com/jessevdk/go-flags"
 )
 
-func checkError(context debos.DebosContext, err error, a debos.Action, stage string) int {
+func checkError(context *debos.DebosContext, err error, a debos.Action, stage string) int {
 	if err == nil {
 		return 0
 	}
 
+	context.State = debos.Failed
 	log.Printf("Action `%s` failed at stage %s, error: %s", a, stage, err)
-	debos.DebugShell(context)
+	debos.DebugShell(*context)
 	return 1
 }
 
 func main() {
 	var context debos.DebosContext
 	var options struct {
-		ArtifactDir   string            `long:"artifactdir"`
+		ArtifactDir   string            `long:"artifactdir" description:"Directory for packed archives and ostree repositories (default: current directory)"`
 		InternalImage string            `long:"internal-image" hidden:"true"`
-		TemplateVars  map[string]string `short:"t" long:"template-var" description:"Template variables"`
+		TemplateVars  map[string]string `short:"t" long:"template-var" description:"Template variables (use -t VARIABLE:VALUE syntax)"`
 		DebugShell    bool              `long:"debug-shell" description:"Fall into interactive shell on error"`
 		Shell         string            `short:"s" long:"shell" description:"Redefine interactive shell binary (default: bash)" optionsl:"" default:"/bin/bash"`
 		ScratchSize   string            `long:"scratchsize" description:"Size of disk backed scratch space"`
+		CPUs          int               `short:"c" long:"cpus" description:"Number of CPUs to use for build VM (default: 2)"`
+		Memory        string            `short:"m" long:"memory" description:"Amount of memory for build VM (default: 2048MB)"`
+		ShowBoot      bool              `long:"show-boot" description:"Show boot/console messages from the fake machine"`
 	}
 
 	var exitcode int = 0
@@ -111,9 +115,11 @@ func main() {
 
 	context.Architecture = r.Architecture
 
+	context.State = debos.Success
+
 	for _, a := range r.Actions {
 		err = a.Verify(&context)
-		if exitcode = checkError(context, err, a, "Verify"); exitcode != 0 {
+		if exitcode = checkError(&context, err, a, "Verify"); exitcode != 0 {
 			return
 		}
 	}
@@ -121,6 +127,24 @@ func main() {
 	if !fakemachine.InMachine() && fakemachine.Supported() {
 		m := fakemachine.NewMachine()
 		var args []string
+
+		if options.Memory == "" {
+			// Set default memory size for fakemachine
+			options.Memory = "2Gb"
+		}
+		memsize, err := units.RAMInBytes(options.Memory)
+		if err != nil {
+			fmt.Printf("Couldn't parse memory size: %v\n", err)
+			exitcode = 1
+			return
+		}
+		m.SetMemory(int(memsize / 1024 / 1024))
+
+		if options.CPUs == 0 {
+			// Set default CPU count for fakemachine
+			options.CPUs = 2
+		}
+		m.SetNumCPUs(options.CPUs)
 
 		if options.ScratchSize != "" {
 			size, err := units.FromHumanSize(options.ScratchSize)
@@ -131,6 +155,8 @@ func main() {
 			}
 			m.SetScratch(size, "")
 		}
+
+		m.SetShowBoot(options.ShowBoot)
 
 		m.AddVolume(context.Artifactdir)
 		args = append(args, "--artifactdir", context.Artifactdir)
@@ -148,8 +174,11 @@ func main() {
 		}
 
 		for _, a := range r.Actions {
+			// Stack PostMachineCleanup methods
+			defer a.PostMachineCleanup(&context)
+
 			err = a.PreMachine(&context, m, &args)
-			if exitcode = checkError(context, err, a, "PreMachine"); exitcode != 0 {
+			if exitcode = checkError(&context, err, a, "PreMachine"); exitcode != 0 {
 				return
 			}
 		}
@@ -161,12 +190,13 @@ func main() {
 		}
 
 		if exitcode != 0 {
+			context.State = debos.Failed
 			return
 		}
 
 		for _, a := range r.Actions {
-			err = a.PostMachine(context)
-			if exitcode = checkError(context, err, a, "Postmachine"); exitcode != 0 {
+			err = a.PostMachine(&context)
+			if exitcode = checkError(&context, err, a, "Postmachine"); exitcode != 0 {
 				return
 			}
 		}
@@ -177,8 +207,11 @@ func main() {
 
 	if !fakemachine.InMachine() {
 		for _, a := range r.Actions {
+			// Stack PostMachineCleanup methods
+			defer a.PostMachineCleanup(&context)
+
 			err = a.PreNoMachine(&context)
-			if exitcode = checkError(context, err, a, "PreNoMachine"); exitcode != 0 {
+			if exitcode = checkError(&context, err, a, "PreNoMachine"); exitcode != 0 {
 				return
 			}
 		}
@@ -195,22 +228,21 @@ func main() {
 
 	for _, a := range r.Actions {
 		err = a.Run(&context)
-		if exitcode = checkError(context, err, a, "Run"); exitcode != 0 {
-			return
-		}
-	}
 
-	for _, a := range r.Actions {
-		err = a.Cleanup(context)
-		if exitcode = checkError(context, err, a, "Cleanup"); exitcode != 0 {
+		// This does not stop the call of stacked Cleanup methods for other Actions
+		// Stack Cleanup methods
+		defer a.Cleanup(&context)
+
+		// Check the state of Run method
+		if exitcode = checkError(&context, err, a, "Run"); exitcode != 0 {
 			return
 		}
 	}
 
 	if !fakemachine.InMachine() {
 		for _, a := range r.Actions {
-			err = a.PostMachine(context)
-			if exitcode = checkError(context, err, a, "PostMachine"); exitcode != 0 {
+			err = a.PostMachine(&context)
+			if exitcode = checkError(&context, err, a, "PostMachine"); exitcode != 0 {
 				return
 			}
 		}
