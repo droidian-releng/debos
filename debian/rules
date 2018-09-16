@@ -7,3 +7,6 @@ override_dh_auto_test:
 	# Disable auto tests at build time
 	# debos requires access to /dev/kvm for tests
 	:
+
+override_dh_auto_install:
+	dh_auto_install -- --no-source
