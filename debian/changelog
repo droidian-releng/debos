@@ -1,3 +1,16 @@
+debos (1.0.0+git20181105.b02e058-1) UNRELEASED; urgency=medium
+
+  [ Dmitry Smirnov ]
+  * Do not install sources.
+
+  [ Héctor Orón Martínez ]
+  * New upstream version 1.0.0+git20181105.b02e058
+  * debian/gbp.conf: switch to DEP14
+  * debian/control: set rules require no root
+  * debian/control: add new build dependency on go-losetup.v1
+
+ -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Nov 2018 17:51:13 +0100
+
 debos (1.0.0+git20180808.5b74d5d-1) unstable; urgency=medium
 
   * New upstream version 1.0.0+git20180808.5b74d5d
