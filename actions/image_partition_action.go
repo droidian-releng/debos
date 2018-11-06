@@ -112,6 +112,7 @@ import (
 	"fmt"
 	"github.com/docker/go-units"
 	"github.com/go-debos/fakemachine"
+	"gopkg.in/freddierice/go-losetup.v1"
 	"log"
 	"os"
 	"os/exec"
@@ -119,6 +120,7 @@ import (
 	"path/filepath"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/go-debos/debos"
 )
@@ -149,6 +151,7 @@ type ImagePartitionAction struct {
 	Partitions       []Partition
 	Mountpoints      []Mountpoint
 	size             int64
+	loopDev          losetup.Device
 	usingLoop        bool
 }
 
@@ -227,6 +230,14 @@ func (i ImagePartitionAction) formatPartition(p *Partition, context debos.DebosC
 	case "btrfs":
 		// Force formatting to prevent failure in case if partition was formatted already
 		cmdline = append(cmdline, "mkfs.btrfs", "-L", p.Name, "-f")
+	case "hfs":
+		cmdline = append(cmdline, "mkfs.hfs", "-h", "-v", p.Name)
+	case "hfsplus":
+		cmdline = append(cmdline, "mkfs.hfsplus", "-v", p.Name)
+	case "hfsx":
+		cmdline = append(cmdline, "mkfs.hfsplus", "-s", "-v", p.Name)
+		// hfsx is case-insensitive hfs+, should be treated as "normal" hfs+ from now on
+		p.FS = "hfsplus"
 	case "none":
 	default:
 		cmdline = append(cmdline, fmt.Sprintf("mkfs.%s", p.FS), "-L", p.Name)
@@ -266,11 +277,11 @@ func (i *ImagePartitionAction) PreNoMachine(context *debos.DebosContext) error {
 
 	img.Close()
 
-	loop, err := exec.Command("losetup", "-f", "--show", i.ImageName).Output()
+	i.loopDev, err = losetup.Attach(i.ImageName, 0, false)
 	if err != nil {
 		return fmt.Errorf("Failed to setup loop device")
 	}
-	context.Image = strings.TrimSpace(string(loop[:]))
+	context.Image = i.loopDev.Path()
 	i.usingLoop = true
 
 	return nil
@@ -317,6 +328,8 @@ func (i ImagePartitionAction) Run(context *debos.DebosContext) error {
 		switch p.FS {
 		case "vfat":
 			command = append(command, "fat32")
+		case "hfsplus":
+			command = append(command, "hfs+")
 		case "none":
 		default:
 			command = append(command, p.FS)
@@ -378,11 +391,34 @@ func (i ImagePartitionAction) Cleanup(context *debos.DebosContext) error {
 	for idx := len(i.Mountpoints) - 1; idx >= 0; idx-- {
 		m := i.Mountpoints[idx]
 		mntpath := path.Join(context.ImageMntDir, m.Mountpoint)
-		syscall.Unmount(mntpath, 0)
+		err := syscall.Unmount(mntpath, 0)
+		if err != nil {
+			log.Printf("Warning: Failed to get unmount %s: %s", m.Mountpoint, err)
+			log.Printf("Unmount failure can cause images being incomplete!")
+			return err
+		}
 	}
 
 	if i.usingLoop {
-		exec.Command("losetup", "-d", context.Image).Run()
+		err := i.loopDev.Detach()
+		if err != nil {
+			log.Printf("WARNING: Failed to detach loop device: %s", err)
+			return err
+		}
+
+		for t := 0; t < 60; t++ {
+			err = i.loopDev.Remove()
+			if err == nil {
+				break
+			}
+			log.Printf("Loop dev couldn't remove %s, waiting", err)
+			time.Sleep(time.Second)
+		}
+
+		if err != nil {
+			log.Printf("WARNING: Failed to remove loop device: %s", err)
+			return err
+		}
 	}
 
 	return nil
