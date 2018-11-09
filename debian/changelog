@@ -9,6 +9,7 @@ debos (1.0.0+git20181105.b02e058-1) UNRELEASED; urgency=medium
   * debian/control: set rules require no root
   * debian/control: add new build dependency on go-losetup.v1
   * debian/control: version fakemachine dependency (Closes: #905923)
+  * debian/README.source: add new file (Closes: #891723)
 
  -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Nov 2018 17:51:13 +0100
 
