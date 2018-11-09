@@ -1,4 +1,4 @@
-debos (1.0.0+git20181105.b02e058-1) UNRELEASED; urgency=medium
+debos (1.0.0+git20181105.b02e058-1) unstable; urgency=medium
 
   [ Dmitry Smirnov ]
   * Do not install sources.
@@ -12,7 +12,7 @@ debos (1.0.0+git20181105.b02e058-1) UNRELEASED; urgency=medium
   * debian/README.source: add new file (Closes: #891723)
   * debian/manpages: ship manpage (Closes: #893473)
 
- -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Nov 2018 17:51:13 +0100
+ -- Héctor Orón Martínez <zumbi@debian.org>  Fri, 09 Nov 2018 10:45:47 +0100
 
 debos (1.0.0+git20180808.5b74d5d-1) unstable; urgency=medium
 
