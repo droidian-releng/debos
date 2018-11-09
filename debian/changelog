@@ -8,6 +8,7 @@ debos (1.0.0+git20181105.b02e058-1) UNRELEASED; urgency=medium
   * debian/gbp.conf: switch to DEP14
   * debian/control: set rules require no root
   * debian/control: add new build dependency on go-losetup.v1
+  * debian/control: version fakemachine dependency (Closes: #905923)
 
  -- Héctor Orón Martínez <zumbi@debian.org>  Tue, 06 Nov 2018 17:51:13 +0100
 

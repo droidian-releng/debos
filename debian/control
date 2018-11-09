@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 10),
                golang-yaml.v2-dev,
                golang-github-sjoerdsimons-ostree-go-dev,
                golang-go-flags-dev,
-               golang-github-go-debos-fakemachine-dev,
+               golang-github-go-debos-fakemachine-dev (>= 0.0~git20181105.9316584~),
                golang-github-surma-gocpio-dev,
                libostree-dev,
                golang-gopkg-freddierice-go-losetup.v1-dev
