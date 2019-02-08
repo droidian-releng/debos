@@ -2,7 +2,7 @@ Source: debos
 Section: devel
 Priority: optional
 Maintainer: Debian Go Packaging Team <pkg-go-maintainers@lists.alioth.debian.org>
-Uploaders: Héctor Orón Martínez <zumbi@debian.org>
+Uploaders: Héctor Orón Martínez <zumbi@debian.org>, Andrej Shadura <andrewsh@debian.org>
 Build-Depends: debhelper (>= 10),
                dh-golang,
                golang-any,
