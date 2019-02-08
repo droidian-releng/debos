@@ -1,3 +1,11 @@
+debos (1.0.0+git20190123.d6e16be-1) unstable; urgency=medium
+
+  * New upstream snapshot 1.0.0+git20190123.d6e16be.
+  * Watch the git repo.
+  * Add myself to Uploaders.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Fri, 08 Feb 2019 16:33:20 +0100
+
 debos (1.0.0+git20181105.b02e058-1) unstable; urgency=medium
 
   [ Dmitry Smirnov ]
