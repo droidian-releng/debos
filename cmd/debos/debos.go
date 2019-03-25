@@ -10,7 +10,7 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/go-debos/debos"
-	"github.com/go-debos/debos/recipe"
+	"github.com/go-debos/debos/actions"
 	"github.com/go-debos/fakemachine"
 	"github.com/jessevdk/go-flags"
 )
@@ -26,7 +26,7 @@ func checkError(context *debos.DebosContext, err error, a debos.Action, stage st
 	return 1
 }
 
-func do_run(r recipe.Recipe, context *debos.DebosContext) int {
+func do_run(r actions.Recipe, context *debos.DebosContext) int {
 	for _, a := range r.Actions {
 		err := a.Run(context)
 
@@ -55,6 +55,7 @@ func warnLocalhost(variable string, value string) {
 	}
 }
 
+
 func main() {
 	var context debos.DebosContext
 	var options struct {
@@ -68,6 +69,9 @@ func main() {
 		Memory        string            `short:"m" long:"memory" description:"Amount of memory for build VM (default: 2048MB)"`
 		ShowBoot      bool              `long:"show-boot" description:"Show boot/console messages from the fake machine"`
 		EnvironVars   map[string]string `short:"e" long:"environ-var" description:"Environment variables (use -e VARIABLE:VALUE syntax)"`
+		Verbose       bool              `short:"v" long:"verbose" description:"Verbose output"`
+		PrintRecipe   bool              `long:"print-recipe" description:"Print final recipe"`
+		DryRun        bool              `long:"dry-run" description:"Compose final recipe to build but without any real work started"`
 	}
 
 	// These are the environment variables that will be detected on the
@@ -113,16 +117,24 @@ func main() {
 		context.DebugShell = options.Shell
 	}
 
+	if options.PrintRecipe {
+		context.PrintRecipe = options.PrintRecipe
+	}
+
+	if options.Verbose {
+		context.Verbose = options.Verbose
+	}
+
 	file := args[0]
 	file = debos.CleanPath(file)
 
-	r := recipe.Recipe{}
+	r := actions.Recipe{}
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		log.Println(err)
 		exitcode = 1
 		return
 	}
-	if err := r.Parse(file, options.TemplateVars); err != nil {
+	if err := r.Parse(file, options.PrintRecipe, options.Verbose, options.TemplateVars); err != nil {
 		log.Println(err)
 		exitcode = 1
 		return
@@ -193,6 +205,11 @@ func main() {
 		if exitcode = checkError(&context, err, a, "Verify"); exitcode != 0 {
 			return
 		}
+	}
+
+	if options.DryRun {
+		log.Printf("==== Recipe done (Dry run) ====")
+		return
 	}
 
 	if !fakemachine.InMachine() && fakemachine.Supported() {
