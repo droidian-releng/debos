@@ -13,6 +13,9 @@ Application Options:
       -s, --shell=          Redefine interactive shell binary (default: bash)
           --scratchsize=    Size of disk backed scratch space
       -e, --environ-var=    Environment variables
+      -v, --verbose         Verbose output
+          --print-recipe    Print final recipe
+          --dry-run         Compose final recipe to build but without any real work started
 
 
 ## Description
@@ -38,6 +41,7 @@ Some of the actions provided by debos to customize and produce images are:
 * overlay: do a recursive copy of directories or files to the target filesystem
 * pack: create a tarball with the target filesystem
 * raw: directly write a file to the output image at a given offset
+* recipe: includes the recipe actions at the given path
 * run: allows to run a command or script in the filesystem or in the host
 * unpack: unpack files from archive in the filesystem
 
