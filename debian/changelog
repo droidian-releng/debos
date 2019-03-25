@@ -1,3 +1,9 @@
+debos (1.0.0+git20190319.cf3fc48-2) experimental; urgency=medium
+
+  * Bump the build dependency on golang-github-sjoerdsimons-ostree-go-dev.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Mon, 25 Mar 2019 12:17:58 +0100
+
 debos (1.0.0+git20190319.cf3fc48-1) experimental; urgency=medium
 
   * Upload to experimental.
