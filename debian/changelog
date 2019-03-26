@@ -1,3 +1,9 @@
+debos (1.0.0+git20190326.5bd4aa9-1) experimental; urgency=medium
+
+  * New upstream snapshot 1.0.0+git20190326.5bd4aa9.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Tue, 26 Mar 2019 16:07:10 +0100
+
 debos (1.0.0+git20190319.cf3fc48-2) experimental; urgency=medium
 
   * Bump the build dependency on golang-github-sjoerdsimons-ostree-go-dev.
