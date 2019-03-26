@@ -231,16 +231,11 @@ actions:
 	var recipeIncluded = subRecipe {
 		"included.yaml",
 		`
-{{- $included_recipe := or .included_recipe "false"}}
 architecture: amd64
 
 actions:
   - action: run
     command: ok.sh
-  {{- if ne $included_recipe "true" }}
-  - action: recipe
-    recipe: armhf.yaml
-  {{- end }}
 `,
 	}
 
@@ -314,7 +309,7 @@ actions:
 }
 
 func runTestWithSubRecipes(t *testing.T, test testSubRecipe, templateVars ...map[string]string) actions.Recipe {
-	var context debos.DebosContext
+	context := debos.DebosContext { &debos.CommonContext{}, "", "" }
 	dir, err := ioutil.TempDir("", "go-debos")
 	assert.Empty(t, err)
 	defer os.RemoveAll(dir)
