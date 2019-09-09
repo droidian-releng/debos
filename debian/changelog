@@ -1,3 +1,9 @@
+debos (1.0.0+git20190906.f5be960-1) unstable; urgency=medium
+
+  * New upstream snapshot 1.0.0+git20190906.f5be960.
+
+ -- Emanuele Aina <emanuele.aina@collabora.com>  Mon, 09 Sep 2019 07:01:02 +0000
+
 debos (1.0.0+git20190326.5bd4aa9-2) unstable; urgency=medium
 
   * Upload to unstable.
