@@ -41,6 +41,7 @@ Yaml syntax for partitions:
 	   fs: filesystem
 	   start: offset
 	   end: offset
+	   features: list of filesystem features
 	   flags: list of flags
 	   fsck: bool
 
@@ -61,6 +62,9 @@ For 'start' and 'end' properties offset can be written in human readable
 form -- '32MB', '1GB' or as disk percentage -- '100%'.
 
 Optional properties:
+
+- features -- list of additional filesystem features which need to be enabled
+for partition.
 
 - flags -- list of additional flags for partition compatible with parted(8)
 'set' command.
@@ -138,14 +142,15 @@ import (
 )
 
 type Partition struct {
-	number int
-	Name   string
-	Start  string
-	End    string
-	FS     string
-	Flags  []string
-	Fsck   bool "fsck"
-	FSUUID string
+	number   int
+	Name     string
+	Start    string
+	End      string
+	FS       string
+	Flags    []string
+	Features []string
+	Fsck     bool "fsck"
+	FSUUID   string
 }
 
 type Mountpoint struct {
@@ -268,6 +273,9 @@ func (i ImagePartitionAction) formatPartition(p *Partition, context debos.DebosC
 	case "btrfs":
 		// Force formatting to prevent failure in case if partition was formatted already
 		cmdline = append(cmdline, "mkfs.btrfs", "-L", p.Name, "-f")
+		if len(p.Features) > 0 {
+			cmdline = append(cmdline, "-O", strings.Join(p.Features, ","))
+		}
 	case "hfs":
 		cmdline = append(cmdline, "mkfs.hfs", "-h", "-v", p.Name)
 	case "hfsplus":
@@ -279,6 +287,9 @@ func (i ImagePartitionAction) formatPartition(p *Partition, context debos.DebosC
 	case "none":
 	default:
 		cmdline = append(cmdline, fmt.Sprintf("mkfs.%s", p.FS), "-L", p.Name)
+		if len(p.Features) > 0 {
+			cmdline = append(cmdline, "-O", strings.Join(p.Features, ","))
+		}
 	}
 
 	if len(cmdline) != 0 {
