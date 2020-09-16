@@ -24,7 +24,7 @@ XS-Go-Import-Path: github.com/go-debos/debos
 Testsuite: autopkgtest-pkg-go
 
 Package: debos
-Architecture: amd64
+Architecture: any
 Built-Using: ${misc:Built-Using}
 Recommends: bmap-tools
           , ovmf
@@ -44,7 +44,6 @@ Depends: ${shlibs:Depends}
          , busybox | busybox-static
          , systemd-container
          , debootstrap
-
 Description: Debian OS builder
  debos is a tool to make creation of various Debian based OS "images"
  simpler. While most other tools focus on specific use-case, debos is
