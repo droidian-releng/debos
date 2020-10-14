@@ -1,3 +1,9 @@
+debos (1.0.0+git20200909.d2ab9d3-1) unstable; urgency=medium
+
+  * New upstream snapshot.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Wed, 14 Oct 2020 22:19:25 +0200
+
 debos (1.0.0+git20191223.292995b-1) unstable; urgency=medium
 
   * New upstream snapshot 1.0.0+git20191223.292995b.
