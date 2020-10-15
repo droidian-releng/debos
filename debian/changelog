@@ -1,3 +1,15 @@
+debos (1.0.0+git20200909.d2ab9d3-2) unstable; urgency=medium
+
+  * Depend on a newer golang-github-sjoerdsimons-ostree-go-dev.
+  * Wrap and sort debian/control.
+  * Switch to debhelper-compat 12.
+  * Bump Standards-Version to 4.5.0.
+  * Update copyrights.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit.
+  * Install examples.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Thu, 15 Oct 2020 19:58:50 +0200
+
 debos (1.0.0+git20200909.d2ab9d3-1) unstable; urgency=medium
 
   * New upstream snapshot.
