@@ -4,11 +4,13 @@ Source: https://github.com/go-debos/debos
 Files-Excluded: vendor Godeps/_workspace
 
 Files: *
-Copyright: 2017 Collabora Ltd
+Copyright: 2017—2020 Collabora Ltd
 License: Apache-2.0
 
 Files: debian/*
-Copyright: 2017 Héctor Orón Martínez <zumbi@debian.org>
+Copyright:
+ 2017—2018 Héctor Orón Martínez <zumbi@debian.org>
+ 2019—2020 Andrej Shadura <andrewsh@debian.org>
 License: Apache-2.0
 Comment: Debian packaging is licensed under the same terms as upstream
 
