@@ -6,7 +6,7 @@ Uploaders:
  Héctor Orón Martínez <zumbi@debian.org>,
  Andrej Shadura <andrewsh@debian.org>,
 Build-Depends:
- debhelper (>= 10),
+ debhelper-compat (= 12),
  dh-golang,
  golang-any,
  golang-github-docker-go-units-dev,
