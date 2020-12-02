@@ -3,10 +3,21 @@
 %:
 	dh $@ --buildsystem=golang --with=golang
 
+override_dh_auto_clean:
+	dh_auto_clean
+	[ -f doc/man/debos.1.upstream ] && mv doc/man/debos.1.upstream doc/man/debos.1
+
 override_dh_auto_test:
 	# Disable auto tests at build time
 	# debos requires access to /dev/kvm for tests
 	:
+
+ifeq (,$(filter nodoc,$(DEB_BUILD_PROFILES)))
+override_dh_auto_build:
+	dh_auto_build
+	mv doc/man/debos.1 doc/man/debos.1.upstream
+	cd doc/man && ./create_manpage.sh
+endif
 
 override_dh_auto_install:
 	dh_auto_install -- --no-source

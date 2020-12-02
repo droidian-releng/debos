@@ -17,6 +17,7 @@ Build-Depends:
  golang-go-flags-dev,
  golang-gopkg-freddierice-go-losetup.v1-dev,
  golang-yaml.v2-dev,
+ pandoc <!nodoc>,
 Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Homepage: https://github.com/go-debos/debos
