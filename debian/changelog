@@ -1,3 +1,11 @@
+debos (1.0.0+git20201202.458b7b3-1) unstable; urgency=medium
+
+  * New upstream snapshot.
+  * Don’t create a nested examples directory.
+  * Rebuild the manpage when we can.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Wed, 02 Dec 2020 19:28:32 +0100
+
 debos (1.0.0+git20200909.d2ab9d3-2) unstable; urgency=medium
 
   * Depend on a newer golang-github-sjoerdsimons-ostree-go-dev.
