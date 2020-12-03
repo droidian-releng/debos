@@ -1,3 +1,10 @@
+debos (1.0.0+git20201202.458b7b3-2) unstable; urgency=medium
+
+  * Revert "Revert "debian/gbp.conf: switch to DEP14"".
+  * Invert the condition to prevent a failure in a clean directory.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Thu, 03 Dec 2020 11:11:39 +0100
+
 debos (1.0.0+git20201202.458b7b3-1) unstable; urgency=medium
 
   * New upstream snapshot.
