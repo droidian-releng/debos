@@ -1,3 +1,9 @@
+debos (1.0.0+git20201203.e939090-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Thu, 10 Dec 2020 11:52:12 +0100
+
 debos (1.0.0+git20201202.458b7b3-2) unstable; urgency=medium
 
   * Revert "Revert "debian/gbp.conf: switch to DEP14"".
