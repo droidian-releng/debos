@@ -1,0 +1,7 @@
+Tests: build-chroot
+Depends:
+ debos,
+ libslirp-helper,
+ linux-image-amd64,
+ user-mode-linux,
+Restrictions: allow-stderr, flaky

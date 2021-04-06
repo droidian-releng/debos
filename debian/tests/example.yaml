@@ -1,0 +1,27 @@
+{{- $architecture := or .architecture "arm64" -}}
+{{- $suite := or .suite "bullseye" -}}
+{{ $image := or .image (printf "debian-%s-%s.tar.gz" $suite $architecture) }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: debootstrap
+    suite: {{ $suite }}
+    components:
+      - main
+    mirror: https://deb.debian.org/debian
+    variant: minbase
+
+  - action: apt
+    description: Install some packages
+    packages:
+      - sudo
+      - adduser
+
+  - action: run
+    chroot: true
+    command: echo debian > /etc/hostname
+
+  - action: pack
+    file: {{ $image }}
+    compression: gz
