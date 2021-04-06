@@ -1,3 +1,10 @@
+debos (1.0.0+git20201203.e939090-2) unstable; urgency=medium
+
+  * Add a basic autopkgtest.
+  * Add --register=no to systemd-nspawn invocation.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Tue, 06 Apr 2021 18:55:53 +0200
+
 debos (1.0.0+git20201203.e939090-1) unstable; urgency=medium
 
   * New upstream release.
