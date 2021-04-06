@@ -1,3 +1,10 @@
+debos (1.0.0+git20201203.e939090-4) unstable; urgency=medium
+
+  * Build an amd64 chroot for tests but also install qemu for future
+    arm tests.
+
+ -- Andrej Shadura <andrewsh@debian.org>  Tue, 06 Apr 2021 23:35:32 +0200
+
 debos (1.0.0+git20201203.e939090-3) unstable; urgency=medium
 
   * Autopkgtest should depend on ca-certificates.
