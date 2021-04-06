@@ -1,5 +1,6 @@
 Tests: build-chroot
 Depends:
+ ca-certificates,
  debos,
  libslirp-helper,
  linux-image-amd64,
