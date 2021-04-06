@@ -1,4 +1,4 @@
-{{- $architecture := or .architecture "arm64" -}}
+{{- $architecture := or .architecture "amd64" -}}
 {{- $suite := or .suite "bullseye" -}}
 {{ $image := or .image (printf "debian-%s-%s.tar.gz" $suite $architecture) }}
 

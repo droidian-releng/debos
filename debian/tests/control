@@ -4,5 +4,6 @@ Depends:
  debos,
  libslirp-helper,
  linux-image-amd64,
+ qemu-user-static,
  user-mode-linux,
 Restrictions: allow-stderr, flaky
