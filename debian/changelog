@@ -1,4 +1,4 @@
-debos (1.0.0+git20210707.c66a48d-1) UNRELEASED; urgency=medium
+debos (1.0.0+git20210707.c66a48d-1) unstable; urgency=medium
 
   * Team upload.
   * New upstream release.
@@ -6,7 +6,7 @@ debos (1.0.0+git20210707.c66a48d-1) UNRELEASED; urgency=medium
       included in upstream release
   * Add golang-github-google-uuid-dev to Build-Dep.
 
- -- Dylan Aïssi <daissi@debian.org>  Fri, 17 Sep 2021 15:28:11 +0200
+ -- Dylan Aïssi <daissi@debian.org>  Fri, 17 Sep 2021 16:20:36 +0200
 
 debos (1.0.0+git20201203.e939090-4) unstable; urgency=medium
 
