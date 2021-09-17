@@ -1,3 +1,10 @@
+debos (1.0.0+git20210707.c66a48d-1) UNRELEASED; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+
+ -- Dylan Aïssi <daissi@debian.org>  Fri, 17 Sep 2021 15:28:11 +0200
+
 debos (1.0.0+git20201203.e939090-4) unstable; urgency=medium
 
   * Build an amd64 chroot for tests but also install qemu for future
