@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.6'
 
 services:
   sut:
@@ -10,6 +10,14 @@ services:
       - type: bind
         source: ../tests
         target: /recipes
+    tmpfs:
+      - /scratch:exec
+    environment:
+      - TMP=/scratch
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - label:disable
     working_dir: /recipes
     entrypoint: ./tests.sh
-    command: --disable-fakemachine
+    command: --fakemachine-backend=uml
