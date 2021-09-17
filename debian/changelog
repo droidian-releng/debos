@@ -2,6 +2,8 @@ debos (1.0.0+git20210707.c66a48d-1) UNRELEASED; urgency=medium
 
   * Team upload.
   * New upstream release.
+  * Drop d/p/0001-systemd-nspawn-shall-be-called-with-option-register-.patch
+      included in upstream release
 
  -- Dylan Aïssi <daissi@debian.org>  Fri, 17 Sep 2021 15:28:11 +0200
 
