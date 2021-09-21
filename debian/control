@@ -10,7 +10,7 @@ Build-Depends:
  dh-golang,
  golang-any,
  golang-github-docker-go-units-dev,
- golang-github-go-debos-fakemachine-dev (>= 0.0~git20181105.9316584~),
+ golang-github-go-debos-fakemachine-dev (>= 0.0~git20210901.fc48786~),
  golang-github-google-uuid-dev,
  golang-github-sjoerdsimons-ostree-go-dev (>= 0.0~git20201014.8fae757-2~),
  golang-github-stretchr-testify-dev,
