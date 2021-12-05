@@ -148,6 +148,7 @@ def debian_package_build(suite, architecture, full_build=True, extra_repos=[], h
 					},
 				],
 				"commands" : [
+					"echo 'deb http://production.repo.droidian.org/ bookworm main' > /etc/apt/sources.list.d/bookworm-prod.list",
 					"releng-build-package",
 					"find /drone -type f -maxdepth 1 -exec mv {} /buildd \\\;",
 				],
