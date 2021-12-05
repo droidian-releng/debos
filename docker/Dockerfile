@@ -3,13 +3,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG GOPATH=/usr/local/go
 
 ### first stage - builder ###
-FROM debian:buster-slim as builder
+FROM debian:bullseye-slim as builder
 
 ARG DEBIAN_FRONTEND
 ARG GOPATH
 ENV GOPATH=${GOPATH}
 
-# install debos build dependencies
+# install debos build and unit-test dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -17,7 +17,8 @@ RUN apt-get update && \
         git \
         golang-go \
         libc6-dev \
-        libostree-dev && \
+        libostree-dev \
+        unzip && \
     rm -rf /var/lib/apt/lists/*
 
 # Build testify from source
@@ -32,7 +33,7 @@ WORKDIR $GOPATH/src/github.com/go-debos/debos/cmd/debos
 RUN go get -t ./...
 
 ### second stage - runner ###
-FROM debian:buster-slim as runner
+FROM debian:bullseye-slim as runner
 
 ARG DEBIAN_FRONTEND
 ARG GOPATH
@@ -67,22 +68,36 @@ RUN apt-get update && \
         debootstrap \
         dosfstools \
         e2fsprogs \
+        equivs \
         fdisk \
         f2fs-tools \
+        git \
         gzip \
         pigz \
         libostree-1-1 \
+        libslirp-helper \
         linux-image-amd64 \
+        openssh-client \
         parted \
         pkg-config \
         qemu-system-x86 \
         qemu-user-static \
+        rsync \
         systemd \
         systemd-container \
-	u-boot-tools \
+        u-boot-tools \
         unzip \
-        xz-utils && \
+        user-mode-linux \
+        xfsprogs \
+        xz-utils \
+        zip && \
     rm -rf /var/lib/apt/lists/*
+
+# debian's qemu-user-static package no longer registers binfmts
+# if running inside a virtualmachine; dockerhub builds are inside a vm
+RUN for arch in aarch64 alpha arm armeb cris hexagon hppa m68k microblaze mips mips64 mips64el mipsel mipsn32 mipsn32el ppc ppc64 ppc64le riscv32 riscv64 s390x sh4 sh4eb sparc sparc32plus sparc64 xtensa xtensaeb; do \
+      update-binfmts --import qemu-$arch; \
+    done
 
 COPY --from=builder $GOPATH/bin/debos /usr/local/bin/debos
 
