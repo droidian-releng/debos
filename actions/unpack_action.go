@@ -7,6 +7,7 @@ Useful for creating target rootfs from saved tarball with prepared file structur
 Only (compressed) tar archives are supported currently.
 
 Yaml syntax:
+
  - action: unpack
    origin: name
    file: file.ext
@@ -73,7 +74,7 @@ func (pf *UnpackAction) Run(context *debos.DebosContext) error {
 	if len(pf.Origin) > 0 {
 		var found bool
 		//Trying to get a filename from origins first
-		origin, found = context.Origins[pf.Origin]
+		origin, found = context.Origin(pf.Origin)
 		if !found {
 			return fmt.Errorf("Origin not found '%s'", pf.Origin)
 		}

@@ -8,6 +8,7 @@ Most of the OS scripts used by `debootstrap` copy `resolv.conf` from the host,
 and this may lead to incorrect configuration when becoming part of the created rootfs.
 
 Yaml syntax:
+
  - action: debootstrap
    mirror: URL
    suite: "name"
@@ -203,10 +204,19 @@ func (d *DebootstrapAction) Run(context *debos.DebosContext) error {
 		cmdline = append(cmdline, fmt.Sprintf("--variant=%s", d.Variant))
 	}
 
+	cmdline = append(cmdline, "--exclude=usr-is-merged")
 	cmdline = append(cmdline, d.Suite)
 	cmdline = append(cmdline, context.Rootdir)
 	cmdline = append(cmdline, d.Mirror)
 	cmdline = append(cmdline, "/usr/share/debootstrap/scripts/unstable")
+
+	/* Make sure /etc/apt/apt.conf.d exists inside the fakemachine otherwise
+	   debootstrap prints a warning about the path not existing. */
+	if fakemachine.InMachine() {
+		if err := os.MkdirAll(path.Join("/etc/apt/apt.conf.d"), os.ModePerm); err != nil {
+			return err
+		}
+	}
 
 	err := debos.Command{}.Run("Debootstrap", cmdline...)
 

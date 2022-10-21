@@ -1,3 +1,9 @@
+debos (1.1.1-1) UNRELEASED; urgency=medium
+
+  * New upstream release (Closes: #1020917)
+
+ -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
+
 debos (1.0.0+git20210707.c66a48d-2) unstable; urgency=medium
 
   * Team upload.
