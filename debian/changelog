@@ -2,6 +2,7 @@ debos (1.1.1-1) UNRELEASED; urgency=medium
 
   * New upstream release (Closes: #1020917)
   * Add myself to list of uploaders
+  * Point d/watch at tagged releases
 
  -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
 
