@@ -20,7 +20,7 @@ Build-Depends:
  golang-gopkg-freddierice-go-losetup.v1-dev,
  golang-yaml.v2-dev,
  pandoc <!nodoc>,
-Standards-Version: 4.5.0
+Standards-Version: 4.6.1
 Rules-Requires-Root: no
 Homepage: https://github.com/go-debos/debos
 Vcs-Browser: https://salsa.debian.org/go-team/packages/debos
