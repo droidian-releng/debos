@@ -12,6 +12,7 @@ debos (1.1.1-1) UNRELEASED; urgency=medium
      - Fakemachine now works with kernel >=5.13 (Closes: #1008762)
      - Fakemachine lib package now depends on required
         libs (Closes: #1022362)
+  * Don't include duplicate Build-Depends from fakemachine
 
  -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
 
