@@ -52,6 +52,9 @@ Depends:
  systemd-container,
  ${misc:Depends},
  ${shlibs:Depends},
+Suggests:
+ libslirp-helper,
+ user-mode-linux,
 Description: Debian OS builder
  debos is a tool to make creation of various Debian based OS "images"
  simpler. While most other tools focus on specific use-case, debos is
