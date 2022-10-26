@@ -8,6 +8,10 @@ debos (1.1.1-1) UNRELEASED; urgency=medium
   * Fix grammatical mistakes in package Description
   * Don't require fakemachine for autopkgtests (Closes: #989145)
   * Bump Standards-Version to 4.6.1
+  * Bump build dependency on golang-github-go-debos-fakemachine-dev
+     - Fakemachine now works with kernel >=5.13 (Closes: #1008762)
+     - Fakemachine lib package now depends on required
+        libs (Closes: #1022362)
 
  -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
 
