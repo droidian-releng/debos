@@ -6,6 +6,7 @@ debos (1.1.1-1) UNRELEASED; urgency=medium
   * Add systemd-resolved to Recommends (Closes: #1020288, #1020691)
   * Add user-mode-linux & libslirp-helper to Suggests
   * Fix grammatical mistakes in package Description
+  * Don't require fakemachine for autopkgtests (Closes: #989145)
 
  -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
 

@@ -2,4 +2,4 @@
 
 : ${testdir:=$PWD/debian/tests}
 
-debos --fakemachine-backend=uml $testdir/example.yaml
+debos --disable-fakemachine $testdir/example.yaml
