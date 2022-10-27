@@ -1,4 +1,4 @@
-debos (1.1.1-1) UNRELEASED; urgency=medium
+debos (1.1.1-1) unstable; urgency=medium
 
   * New upstream release (Closes: #1020917)
   * Add myself to list of uploaders
@@ -14,7 +14,7 @@ debos (1.1.1-1) UNRELEASED; urgency=medium
         libs (Closes: #1022362)
   * Don't include duplicate Build-Depends from fakemachine
 
- -- Christopher Obbard <chris.obbard@collabora.com>  Fri, 21 Oct 2022 14:19:57 +0100
+ -- Christopher Obbard <chris.obbard@collabora.com>  Thu, 27 Oct 2022 08:52:37 +0100
 
 debos (1.0.0+git20210707.c66a48d-2) unstable; urgency=medium
 
