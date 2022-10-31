@@ -36,6 +36,7 @@ Recommends:
  bmap-tools,
  bzip2,
  e2fsprogs,
+ fdisk,
  linux-image-amd64,
  mount,
  ovmf,
