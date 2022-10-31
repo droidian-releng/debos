@@ -2,4 +2,4 @@ Tests: build-chroot
 Depends:
  ca-certificates,
  debos,
-Restrictions: allow-stderr, needs-internet, needs-root
+Restrictions: allow-stderr, isolation-machine, needs-internet, needs-root

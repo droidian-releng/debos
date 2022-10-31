@@ -1,3 +1,9 @@
+debos (1.1.1-2) UNRELEASED; urgency=medium
+
+  * Run autopkgtest in an isolated virtual machine
+
+ -- Christopher Obbard <chris.obbard@collabora.com>  Mon, 31 Oct 2022 10:03:31 +0000
+
 debos (1.1.1-1) unstable; urgency=medium
 
   * New upstream release (Closes: #1020917)
