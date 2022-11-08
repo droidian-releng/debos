@@ -35,6 +35,7 @@ Built-Using:
 Recommends:
  bmap-tools,
  bzip2,
+ dosfstools,
  e2fsprogs,
  fdisk,
  linux-image-amd64,
