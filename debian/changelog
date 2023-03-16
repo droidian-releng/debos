@@ -1,3 +1,13 @@
+debos (1.1.1-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Cherry-pick upstream commit that unbreaks bookworm (Closes: #1027787)
+  * Cherry-pick upstream doc fix for non-free-firmware
+  * Cherry-pick upstream example fix for interactive password prompt
+    (Closes: #1006823)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 16 Mar 2023 10:09:37 +0100
+
 debos (1.1.1-2) unstable; urgency=medium
 
   * Run autopkgtest in an isolated virtual machine
