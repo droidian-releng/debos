@@ -1,3 +1,12 @@
+debos (1.1.2-1) unstable; urgency=medium
+
+  * New upstream version 1.1.2
+  * Remove patches applied in new upstream release
+  * Bump debhelper compat version to 13
+  * Bump Standards-Version to 4.6.2
+
+ -- Christopher Obbard <chris.obbard@collabora.com>  Thu, 28 Sep 2023 17:04:57 +0100
+
 debos (1.1.1-2.1) unstable; urgency=medium
 
   * Non-maintainer upload.
