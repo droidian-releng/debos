@@ -7,7 +7,7 @@ Uploaders:
  Christopher Obbard <chris.obbard@collabora.com>,
  Andrej Shadura <andrewsh@debian.org>,
 Build-Depends:
- debhelper-compat (= 12),
+ debhelper-compat (= 13),
  dh-golang,
  golang-any,
  golang-github-docker-go-units-dev,
