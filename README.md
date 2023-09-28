@@ -45,6 +45,8 @@ Some of the actions provided by debos to customize and produce images are:
 * ostree-deploy: deploy an OSTree branch to the image
 * overlay: do a recursive copy of directories or files to the target filesystem
 * pack: create a tarball with the target filesystem
+* pacman: install packages and their dependencies with pacman
+* pacstrap: construct the target rootfs with pacstrap
 * raw: directly write a file to the output image at a given offset
 * recipe: includes the recipe actions at the given path
 * run: allows to run a command or script in the filesystem or in the host
@@ -85,6 +87,7 @@ make a tarball.
         suite: bookworm
         components:
           - main
+          - non-free-firmware
         mirror: https://deb.debian.org/debian
         variant: minbase
 

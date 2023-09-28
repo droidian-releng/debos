@@ -3,8 +3,7 @@ Overlay Action
 
 Recursive copy of directory or file to target filesystem.
 
-Yaml syntax:
-
+ # Yaml syntax:
  - action: overlay
    origin: name
    source: directory
@@ -27,6 +26,7 @@ package actions
 
 import (
 	"fmt"
+	"log"
 	"path"
 
 	"github.com/go-debos/debos"
@@ -64,5 +64,6 @@ func (overlay *OverlayAction) Run(context *debos.DebosContext) error {
 		return err
 	}
 
+	log.Printf("Overlaying %s on %s", sourcedir, destination)
 	return debos.CopyTree(sourcedir, destination)
 }

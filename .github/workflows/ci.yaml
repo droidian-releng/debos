@@ -9,6 +9,9 @@ on:
       - '*.tmp'
     tags:
       - '*'
+  # Build at 04:00am every Monday
+  schedule:
+    - cron: "0 4 * * 1"
   pull_request:
   workflow_dispatch:
 
@@ -21,6 +24,7 @@ jobs:
           - debos-arch
           - debos-bookworm
           - debos-bullseye
+          - debos-trixie
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -29,7 +33,7 @@ jobs:
       image: ghcr.io/go-debos/test-containers/${{matrix.variant}}:main
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Test build
       run: go build -o debos cmd/debos/debos.go
@@ -46,10 +50,10 @@ jobs:
     needs: test
     steps:
       - name: Repository checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Use cache
         uses: actions/cache@v3
@@ -58,7 +62,7 @@ jobs:
           key: ${{ runner.os }}-docker
 
       - name: Build Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: false
@@ -82,10 +86,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Repository checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Use cache
         uses: actions/cache@v3
@@ -94,7 +98,7 @@ jobs:
           key: ${{ runner.os }}-docker
 
       - name: Build Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: false
@@ -121,10 +125,12 @@ jobs:
           - { name: "uml", backend: "--fakemachine-backend=uml" }
         test:
           - { name: "recipes", case: "recipes" }
-          - { name: "debian (amd64}", case: "debian", variables: "-t architecture:amd64" }
+          - { name: "debian (amd64)", case: "debian", variables: "-t architecture:amd64" }
           - { name: "debian (arm64)", case: "debian", variables: "-t architecture:arm64" }
           - { name: "debian (armhf)", case: "debian", variables: "-t architecture:armhf" }
         include:
+          - backend: { name: "arch", backend: "--fakemachine-backend=qemu" }
+            test: { name: "arch", case: "arch" }
           - backend: { name: "qemu", backend: "--fakemachine-backend=qemu" }
             test: { name: "partitioning", case: "partitioning" }
           - backend: { name: "uml", backend: "--fakemachine-backend=uml" }
@@ -134,7 +140,7 @@ jobs:
     name: ${{matrix.test.name}} on ${{matrix.backend.name}}
     steps:
       - name: Repository checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install QEMU emulation binaries
         if: matrix.backend.install_qemu
@@ -160,22 +166,25 @@ jobs:
           --tmpfs /run
           --privileged
           -e TMP=/scratch
+          -e SYSTEMD_NSPAWN_UNIFIED_HIERARCHY=1
           debos -v
           ${{matrix.backend.backend}}
           ${{matrix.test.variables}}
           ${{matrix.test.case}}/test.yaml
 
-  # Job to key the bors success status against
-  bors:
-    name: bors
-    if: success()
+  # Job to key success status against
+  allgreen:
+    name: allgreen
+    if: always()
     needs:
       - unit-tests
       - recipe-tests
     runs-on: ubuntu-latest
     steps:
-      - name: Mark the job as a success
-        run: exit 0
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
 
   publish-github:
     name: Publish to GHCR
@@ -190,11 +199,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.GITHUB_TAG }}
           tags: |
@@ -205,14 +214,14 @@ jobs:
             "type=ref,event=pr"
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Use cache
         uses: actions/cache@v3
@@ -221,7 +230,7 @@ jobs:
           key: ${{ runner.os }}-docker
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
@@ -244,12 +253,12 @@ jobs:
                 "${{ secrets.DOCKERHUB_PASSWORD }}" != "" ]]; \
           then
             echo "Dockerhub secrets exist"
-            echo "::set-output name=has-secrets::true"
+            echo "has-secrets=true" >> $GITHUB_OUTPUT
           else
             echo "Dockerhub secrets do not exist; not pushing to Dockerhub"
             echo "Please set the following secrets on GitHub (settings > secrets > actions > new):"
             echo "DOCKERHUB_IMAGE, DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD"
-            echo "::set-output name=has-secrets::false"
+            echo "has-secrets=false" >> $GITHUB_OUTPUT
           fi
 
   publish-dockerhub:
@@ -268,11 +277,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ secrets.DOCKERHUB_IMAGE }}
           tags: |
@@ -283,14 +292,14 @@ jobs:
             "type=ref,event=pr"
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         continue-on-error: true
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Use cache
         uses: actions/cache@v3
@@ -299,7 +308,7 @@ jobs:
           key: ${{ runner.os }}-docker
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: .
