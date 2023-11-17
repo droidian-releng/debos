@@ -1,3 +1,16 @@
+debos (1.1.2-2) unstable; urgency=medium
+
+  [ Christopher Obbard ]
+  * Update obbardc's email address in Uploaders.
+  * Add golang-github-alessio-shellescape-dev to Build-Depends.
+    (Closes: #1056140)
+
+  [ Andreas Henriksson ]
+  * Recommend fdisk
+  * Recommend dosfstools for mkfs.vfat
+
+ -- Christopher Obbard <obbardc@debian.org>  Fri, 17 Nov 2023 16:36:47 +0000
+
 debos (1.1.2-1) unstable; urgency=medium
 
   * New upstream version 1.1.2
