@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Go Packaging Team <pkg-go-maintainers@lists.alioth.debian.org>
 Uploaders:
  Héctor Orón Martínez <zumbi@debian.org>,
- Christopher Obbard <chris.obbard@collabora.com>,
+ Christopher Obbard <obbardc@debian.org>,
  Andrej Shadura <andrewsh@debian.org>,
 Build-Depends:
  debhelper-compat (= 13),
