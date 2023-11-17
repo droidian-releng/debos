@@ -10,6 +10,7 @@ Build-Depends:
  debhelper-compat (= 13),
  dh-golang,
  golang-any,
+ golang-github-alessio-shellescape-dev,
  golang-github-docker-go-units-dev,
  golang-github-go-debos-fakemachine-dev (>= 0.0.3-2~),
  golang-github-google-uuid-dev,
