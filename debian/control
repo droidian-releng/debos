@@ -29,7 +29,7 @@ XS-Go-Import-Path: github.com/go-debos/debos
 Testsuite: autopkgtest-pkg-go
 
 Package: debos
-Architecture: amd64
+Architecture: amd64 arm64 armhf
 Built-Using:
  ${misc:Built-Using},
 Recommends:
