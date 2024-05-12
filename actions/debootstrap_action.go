@@ -175,6 +175,9 @@ func (d *DebootstrapAction) isLikelyOldSuite() bool {
 		return false
 	case "forky":
 		return false
+	// Droidian-specific change
+	case "rolling":
+		return false
 	default:
 		return true
 	}
